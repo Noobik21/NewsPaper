@@ -1,0 +1,9 @@
+{% extends 'default.html' %}
+
+{% block content %}
+
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.created|date:"d.m.Y" }}</p>
+    <p>{{ post.text }}</p>
+
+{% endblock %}

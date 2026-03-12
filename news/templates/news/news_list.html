@@ -1,0 +1,25 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+{% block content %}
+
+    {% for post in news %}
+        <h2>
+            <a href = "{{ post.id }}">{{ post. title|censor }}</a>
+        </h2>
+        <p>{{ post.created|date:"d.m.Y" }}</p>
+        <p>{{ post.text|truncatechars:20 }}</p>
+        <hr>
+    {% endfor %}
+    {% if page_obj.has_previous %}
+    <a href="?page=1">1</a>
+    <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+{% endif %}
+
+<span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Вперед</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+{% endif %}
+
+{% endblock %}

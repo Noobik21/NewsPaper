@@ -1,0 +1,13 @@
+<h1>Поиск новостей</h1>
+
+<form method="get">
+    {{ filter.form }}
+    <input type="submit" value="Найти">
+</form>
+
+<hr>
+
+{% for post in filter.qs %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.dateCreation }}</p>
+{% endfor %}
