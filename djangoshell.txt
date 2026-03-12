@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from news.models import Author, Category, Post, Comment
 from django.contrib.auth.models import User
 
@@ -59,3 +60,66 @@ best_post.title
 best_post.preview()
 
 Comment.objects.filter(post=best_post).values('created','user__username','rating','text')
+=======
+from news.models import Author, Category, Post, Comment
+from django.contrib.auth.models import User
+
+user1 = User.objects.create_user(username='Иванов Иван Иванович')
+user2 = User.objects.create_user(username='Васильев Василий Васильевич')
+
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+cat1 = Category.objects.create(name='Sport')
+cat2 = Category.objects.create(name='Politics')
+cat3 = Category.objects.create(name='IT')
+cat4 = Category.objects.create(name='Science')
+
+post1 = Post.objects.create(author=author1, post_type='AR', title='Python Article', 
+text='Very long text about Python...')
+post2 = Post.objects.create(author=author1, post_type='AR', title='Django Article', text='Very long text about Django...')
+post3 = Post.objects.create(author=author2, post_type='NW', title='Breaking News', text='Important breaking news...')
+
+post1.categories.add(cat1, cat3)  # 2 категории
+post2.categories.add(cat2)
+post3.categories.add(cat4)
+
+comment1 = Comment.objects.create(post=post1, user=user2, text='Nice article!')
+comment2 = Comment.objects.create(post=post2, user=user2, text='Very useful!')
+comment3 = Comment.objects.create(post=post3, user=user1, text='Interesting news!')
+comment4 = Comment.objects.create(post=post1, user=user1, text='I agree!')
+
+post1.like()
+post1.like()
+post1.like()
+
+post2.like()
+post3.dislike()
+
+comment1.like()
+comment1.like()
+comment2.like()
+comment3.dislike()
+comment4.like()
+
+author1.update_rating()
+author2.update_rating()
+
+
+best_author = Author.objects.order_by('-rating').first()
+best_author.user.username
+best_author.rating
+
+best_post = Post.objects.order_by('-rating').first()
+
+best_post.created
+best_post.author.user.username
+best_post.rating
+best_post.title
+best_post.preview()
+
+Comment.objects.filter(post=best_post).values('created','user__username','rating','text')
+>>>>>>> d694537e88001b783309c247ae3642d947d0a82a

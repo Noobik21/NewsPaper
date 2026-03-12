@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.views.generic import ListView
 from .models import Post
 from django.views.generic import DetailView
@@ -52,3 +53,20 @@ class PostDelete(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = '/news/'
+=======
+from django.views.generic import ListView
+from .models import Post
+from django.views.generic import DetailView
+
+class NewsList(ListView):
+    model = Post
+    template_name = 'news/news_list.html'
+    context_object_name = 'news'
+    ordering = ['-created']
+
+class NewsDetail(DetailView):
+    model = Post
+    template_name = 'news/news_detail.html'
+    context_object_name = 'post'
+# Create your views here.
+>>>>>>> d694537e88001b783309c247ae3642d947d0a82a
