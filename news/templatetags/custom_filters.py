@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django import template
 
 register = template.Library()
@@ -14,7 +13,7 @@ def censor(value):
         value = value.replace(word, word[0] + '*' * (len(word) - 1))
         value = value.replace(word.capitalize(), word[0] + '*' * (len(word) - 1))
 
-=======
+
 from django import template
 
 register = template.Library()
@@ -30,5 +29,4 @@ def censor(value):
         value = value.replace(word, word[0] + '*' * (len(word) - 1))
         value = value.replace(word.capitalize(), word[0] + '*' * (len(word) - 1))
 
->>>>>>> d694537e88001b783309c247ae3642d947d0a82a
     return value
