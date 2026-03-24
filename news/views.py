@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from.forms import PostForm
 from django.views.generic.edit import DeleteView
 
+
 @login_required
 def upgrade_me(request):
     user = request.user

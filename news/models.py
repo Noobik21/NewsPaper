@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
@@ -20,12 +21,16 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    subscribes = models.ManyToManyField(User, related_name = 'categories')
 
     def __str__(self):
         return self.name
 
 
 class Post(models.Model):
+    title = models.CharField(max_length=255)
+    text = models.TextField()
+    category = models.ManyToManyField(Category, related_name='posts')
 
     ARTICLE = 'AR'
     NEWS = 'NW'
