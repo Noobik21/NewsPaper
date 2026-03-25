@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
-
-from django.conf.global_settings import LOGIN_REDIRECT_URL, AUTHENTICATION_BACKENDS
+from celery.schedules import crontab
+from django.conf.global_settings import LOGIN_REDIRECT_URL, AUTHENTICATION_BACKENDS, INSTALLED_APPS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,6 +34,14 @@ SITE_ID = 1
 
 
 # Application definition
+INSTALLED_APPS += ['django_celery_beat']
+
+CELERY_BEAT_SCHEDULE ={
+    'weekly-newsletter':{
+        'task': 'news.tasks.send_weekly_news',
+        'schedule': crontab(minute=0, hour=8, day_of_week=1),
+    },
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -140,3 +148,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 LOGIN_URL = '/accounts/login/'
 EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 
 def my_job():
     last_week = timezone.now() - timedelta(days=7)
-    posts = Post.objects.filter(created_at__gte=last_week)
+    posts = Post.objects.filter(created__gte=last_week)
 
     for category in Category.objects.all():
         subscribers = category.subscribers.all()

@@ -3,6 +3,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from .models import Post
+from .tasks import send_news_notification
+
+
 
 @receiver(post_save, sender = User)
 def add_user_to_common(sender, instance, created, **kwargs):
@@ -36,3 +39,9 @@ def notify_subscribers(sender, instance, created, **kwargs):
                         from_email='your_email@gmail.com',
                         recipient_list=[user.email],
                     )
+
+@receiver(post_save, sender=Post)
+def notify_subscribers(sender, instance, created, **kwargs):
+    if created:
+        for user in instance.category.subscribes.all():
+            send_news_notification.delay(user.email, instance.title)
