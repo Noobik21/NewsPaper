@@ -5,15 +5,8 @@
     <h1>{{ post.title }}</h1>
     <p>{{ post.created|date:"d.m.Y" }}</p>
     <p>{{ post.text }}</p>
-
-
-{% extends 'default.html' %}
-
-{% block content %}
-
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.created|date:"d.m.Y" }}</p>
-    <p>{{ post.text }}</p>
-
-
+    <form> action ="{% url'subscribe'category.id %}" method ="post">
+        {% csrf_token %}
+        <buttom type = "submit">Подписаться</buttom>
+    </form>
 {% endblock %}

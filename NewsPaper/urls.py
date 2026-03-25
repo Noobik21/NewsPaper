@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from news.views import subscribe
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('news.urls'))
+    path('', include('news.urls')),
+    path('subscribe/<int:pk>/', subscribe, name = 'subscribe'),
 ]

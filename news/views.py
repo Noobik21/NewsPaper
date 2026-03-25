@@ -1,4 +1,6 @@
 from django.views.generic import ListView, CreateView
+from unicodedata import category
+
 from .models import Post
 from django.views.generic import DetailView
 from django_filters.views import FilterView
@@ -7,10 +9,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from.forms import PostForm
+from .forms import PostForm
 from django.views.generic.edit import DeleteView
+from .models import Category
+
 
 
 @login_required
@@ -19,6 +23,12 @@ def upgrade_me(request):
     authors_group = Group.objects.get(name = 'authors')
     user.groups.add(authors_group)
     return redirect('/')
+
+@login_required
+def subscribe(request, pk):
+    category = get_object_or_404(Category, id = pk)
+    category.subscribers.add(request.user)
+    return redirect(request.META.get('HTTP_REFER','/'))
 
 class NewsList(ListView):
     model = Post
